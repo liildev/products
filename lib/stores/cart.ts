@@ -2,7 +2,7 @@
 
 import { makeAutoObservable } from 'mobx';
 import type { Product } from '@/types/product';
-import type { RootStore } from './types';
+import type { RootStore } from '@/types/app';
 import { CartItem } from '@/types/app';
 
 export class CartStore {

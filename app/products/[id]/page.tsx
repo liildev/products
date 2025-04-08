@@ -2,12 +2,12 @@ import type { Metadata } from 'next';
 import { ProductDetails } from '@/components/product-details';
 import { mockProducts } from '@/lib/mock';
 
-export async function generateMetadata({
-	params,
-}: {
-	params: { id: string };
-}): Promise<Metadata> {
-	const id = Number(params.id);
+type Props = {
+	params: Promise<{ id: string }>;
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+	const id = Number((await params).id);
 	const product = mockProducts.find((p) => p.id === id);
 
 	if (!product) {
@@ -39,8 +39,10 @@ export async function generateMetadata({
 	};
 }
 
-const ProductDetailPage = ({ params }: { params: { id: string } }) => {
-	return <ProductDetails id={params.id} />;
+const ProductDetailPage = async ({ params }: Props) => {
+	const id = (await params).id;
+
+	return <ProductDetails id={id} />;
 };
 
 export default ProductDetailPage;
